@@ -8,5 +8,9 @@
 </script>
 
 <style scoped>
-
+a{
+    padding: 20px;
+    font-size: 24px;
+    
+}
 </style>
