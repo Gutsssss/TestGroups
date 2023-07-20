@@ -57,41 +57,20 @@ import Row from "primevue/row";
 import ToggleButton from 'primevue/togglebutton';
 import Panel from 'primevue/panel';
 
-const products = ref();
 const add = (data) => {
-  if (Groups.value.group1.length < 3) {
-    Groups.value.group1.push(data.data);
-    usedPlayers.value.push(data.data.id)
-    return;
-  }
-  if (Groups.value.group2.length < 3) {
-    Groups.value.group2.push(data.data);
-    usedPlayers.value.push(data.data.id)
-    return;
-  }
-  if (Groups.value.group3.length < 3) {
-    Groups.value.group3.push(data.data);
+  for(let i in Groups.value)
+  if (Groups.value[i].length < 3) {
+    Groups.value[i].push(data.data);
     usedPlayers.value.push(data.data.id)
     return;
   }
 };
 
 const del = (data) => {
-  Groups.value.group1.forEach((x) => {
+  for(let i in Groups.value)
+  Groups.value[i].forEach((x) => {
     if (JSON.stringify(x) === JSON.stringify(data)) {
-      Groups.value.group1.splice(Groups.value.group1.indexOf(data), 1);
-      usedPlayers.value.splice(usedPlayers.value.indexOf(data.id), 1)
-    }
-  });
-  Groups.value.group2.forEach((x) => {
-    if (JSON.stringify(x) === JSON.stringify(data)) {
-      Groups.value.group2.splice(Groups.value.group2.indexOf(data), 1);
-      usedPlayers.value.splice(usedPlayers.value.indexOf(data.id), 1)
-    }
-  });
-  Groups.value.group3.forEach((x) => {
-    if (JSON.stringify(x) === JSON.stringify(data)) {
-      Groups.value.group3.splice(Groups.value.group3.indexOf(data), 1);
+      Groups.value[i].splice(Groups.value[i].indexOf(data), 1);
       usedPlayers.value.splice(usedPlayers.value.indexOf(data.id), 1)
     }
   });
@@ -118,27 +97,12 @@ const Groups = ref({
   group2: [],
   group3: [],
 });
-
 const saveGroups = () => {
-    const result1 = Groups.value.group1.map((x) => {
-        return {
-            player_id:x.id,
-            group_id:1
-        }
+  for(let i in Groups.value)
+   Groups.value[i].map((x) => {
+    let restult = savedGroups.value.push({player_id:x.id,
+            group_id:i})
     })
-    const result2 = Groups.value.group2.map((x) => {
-        return {
-            player_id:x.id,
-            group_id:2
-        }
-    })
-    const result3 = Groups.value.group3.map((x) => {
-        return {
-            player_id:x.id,
-            group_id:3
-        }
-    })
-    savedGroups.value = [...result1,...result2,...result3]
     console.log(1)
 }
 
@@ -146,6 +110,7 @@ const stateButton = computed(() => {
     if(usedPlayers.value.length === 9) return false
     return true
 })
+
 
 
 const savedGroups = ref([])
